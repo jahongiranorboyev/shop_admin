@@ -1,0 +1,232 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-body">
+    <div class="title-header">
+        <h5>Add New Product</h5>
+    </div>
+
+    <!-- New Product Add Start -->
+    {% for message in messages %}
+    	<p style="color: {% if message.level == 25 %}green {% else %} red {% endif %}">{{ message }}</p>
+    {% endfor %}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- Product Information Card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Product Information</h5>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data" class="theme-form theme-form-2 mega-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-2 mb-0">Product Name</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="name" value="{{ product.name }}" placeholder="Product Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-2 mb-0">Product Price</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="number" name="price" value="{{ product.price }}" placeholder="Product Price" step="0.01">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Product Type</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="product_type">
+                                                    <option {% if product.product_type == "Simple" %}selected{% endif %}>Simple</option>
+                                                    <option {% if product.product_type == "Classified" %}selected{% endif %}>Classified</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Category</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="category">
+                                                    <option disabled {% if not product.category %}selected{% endif %}>Select Category</option>
+                                                    {% for category in categories %}
+                                                        <option value="{{ category.id }}" {% if product.category == category %}selected{% endif %}>{{ category.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Subcategory</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="subcategory">
+                                                    <option disabled {% if not product.subcategory %}selected{% endif %}>Select Subcategory</option>
+                                                    {% for subcategory in subcategories %}
+                                                        <option value="{{ subcategory.id }}" {% if product.subcategory == subcategory %}selected{% endif %}>{{ subcategory.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Brand</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="brand">
+                                                    <option disabled {% if not product.brand %}selected{% endif %}>Select Brand</option>
+                                                    {% for brand in brands %}
+                                                        <option value="{{ brand.id }}" {% if product.brand == brand %}selected{% endif %}>{{ brand.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Unit</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="unit">
+                                                    <option {% if product.unit == "Kilogram" %}selected{% endif %}>Kilogram</option>
+                                                    <option {% if product.unit == "Pieces" %}selected{% endif %}>Pieces</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Action Buttons (inside the form) -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <a href="{% url 'products:product-list' %}" class="btn btn-secondary">
+                                                <button type="button" class="btn btn-primary">Cancel</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Product Description Card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Description</h5>
+                                </div>
+                                <form method="POST" class="theme-form theme-form-2 mega-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <label class="form-label-title col-sm-2 mb-0">Product Description</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="description">{{ product.description }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Product Images Card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Product Images</h5>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data" class="theme-form theme-form-2 mega-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Images</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control form-choose" type="file" name="images" multiple>
+                                            </div>
+                                        </div>
+
+                                        <div class="row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Thumbnail Image</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control form-choose" type="file" name="thumbnail_image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Product Videos Card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Product Videos</h5>
+                                </div>
+                                <form method="POST" class="theme-form theme-form-2 mega-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Video Provider</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="video_provider">
+                                                    <option {% if product.video_provider == "Vimeo" %}selected{% endif %}>Vimeo</option>
+                                                    <option {% if product.video_provider == "Youtube" %}selected{% endif %}>Youtube</option>
+                                                    <option {% if product.video_provider == "Dailymotion" %}selected{% endif %}>Dailymotion</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row align-items-center">
+                                            <label class="form-label-title col-sm-2 mb-0">Video Link</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="video_link" value="{{ product.video_link }}" placeholder="Video Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Information Card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Shipping</h5>
+                                </div>
+                                <form method="POST" class="theme-form theme-form-2 mega-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-2 mb-0">Weight (kg)</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="number" name="weight" value="{{ product.weight }}" placeholder="Weight">
+                                            </div>
+                                        </div>
+
+                                        <div class="row align-items-center">
+                                            <label class="col-sm-2 col-form-label form-label-title">Dimensions (cm)</label>
+                                            <div class="col-sm-10">
+                                                <select class="js-example-basic-single w-100" name="dimension">
+                                                    <option {% if product.dimensions_length %}selected{% endif %}>Length</option>
+                                                    <option {% if product.dimensions_width %}selected{% endif %}>Width</option>
+                                                    <option {% if product.dimensions_height %}selected{% endif %}>Height</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+</div>
+{% endblock %}

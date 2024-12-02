@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 60px; padding: 40px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+    <h2 class="text-center mb-5" style="font-family: 'Roboto', sans-serif; font-size: 32px; color: #333;">Category List</h2>
+    
+    <a href="{% url 'categories:category_create' %}" class="btn btn-success mb-4 w-100" style="font-size: 18px; font-weight: bold;">Add New Category</a>
+    
+    <table class="table table-bordered" style="width: 100%; font-size: 16px; border-radius: 8px; overflow: hidden; border-collapse: collapse;">
+        <thead class="thead-light" style="background-color: #28a745; color: white;">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr style="text-align: center; border-bottom: 2px solid #ddd;">
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.slug }}</td>
+                <td>{% if category.parent  %} Subcategory {% else %} Category {% endif %}</td>
+                <td>
+                    <a href="{% url 'categories:category_edit' category.pk %}" class="btn btn-warning btn-sm mr-2 action-btn" style="font-size: 14px; padding: 8px 12px; background-color: white; color: #ffc107; border: 1px solid #ffc107;">
+                        <i class="fa fa-pencil-alt"></i> <!-- Edit icon -->
+                    </a>
+                    <a href="{% url 'categories:category_delete' category.pk %}" class="btn btn-danger btn-sm action-btn" style="font-size: 14px; padding: 8px 12px; background-color: white; color: #dc3545; border: 1px solid #dc3545;">
+                        <i class="fa fa-trash-alt"></i> <!-- Delete icon -->
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center" style="font-size: 16px; padding: 20px;">No categories available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .container {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 50px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 30px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        font-size: 18px;
+        border-radius: 8px;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-info:hover {
+        background-color: #138496;
+        color: white;
+        border-color: #138496;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        color: white;
+        border-color: #e0a800;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        color: white;
+        border-color: #c82333;
+    }
+
+    .table th, .table td {
+        padding: 16px;
+        text-align: center;
+    }
+
+    .table th {
+        font-weight: bold;
+    }
+
+    .thead-light {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .table-bordered {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
+
+    .fa {
+        font-size: 18px;
+    }
+
+    .action-btn:hover {
+        background-color: #f1f1f1;
+        border-color: #ccc;
+    }
+</style>
+{% endblock %}

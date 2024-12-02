@@ -1,0 +1,112 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Registration page">
+    <meta name="keywords" content="sign up, user registration">
+    <meta name="author" content="Your Project">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <title>Sign Up</title>
+
+    <!-- Fontawesome css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/font-awesome.css' %}">
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}">
+    <!-- App css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+</head>
+
+<body>
+    <!-- Sign Up Form Start -->
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-12 p-0">
+                <form action="{% url 'authentications:register' %}" method="post">
+                    {% csrf_token %}
+                    <div class="login-section">
+                        <div class="materialContainer">
+                            <div class="box">
+                                <div class="login-title">
+                                    <h2>Register</h2>
+                                </div>
+                                <!-- Messages block -->
+                                {% for message in messages %}
+                                    <p style="color: {% if message.level == 25 %} green {% else %} red {% endif %};">
+                                        {{ message }}
+                                    </p>
+                                {% endfor %}
+
+                                <!-- Username -->
+                                <div class="input">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="username" id="name" required>
+                                    <span class="spin"></span>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="input">
+                                    <label for="emailname">Email Address</label>
+                                    <input type="email" name="email" id="emailname" required>
+                                    <span class="spin"></span>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="input">
+                                    <label for="pass">Password</label>
+                                    <input type="password" name="password1" id="pass" required>
+                                    <span class="spin"></span>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="input">
+                                    <label for="compass">Confirm Password</label>
+                                    <input type="password" name="password2" id="compass" required>
+                                    <span class="spin"></span>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="button login">
+                                    <button type="submit">
+                                        <span>Sign Up</span>
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+
+                                <p class="sign-category">
+                                    <span>Or sign up with</span>
+                                </p>
+
+                                <!-- Social Login -->
+                                <div class="row gx-md-3 gy-3">
+                                    <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                        <div class="social-media google-media">
+                                            <img src="{% static 'assets/images/google.png' %}" alt="Google">
+                                            <h6>Google</h6>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Already have an account -->
+                                <p>
+                                    <a href="{% url 'authentications:register-login' %}" class="theme-color">Already have an account?</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Sign Up Form End -->
+
+    <!-- Latest js -->
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/script.js' %}"></script>
+</body>
+
+</html>

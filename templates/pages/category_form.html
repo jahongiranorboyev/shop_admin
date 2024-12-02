@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 80px;">
+    <h2 class="text-center mb-5" style="font-family: 'Roboto', sans-serif;">Add New Category</h2>
+    <form method="post" enctype="multipart/form-data" class="category-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success w-100 mt-4">Save Category</button>
+    </form>
+</div>
+
+<style>
+/* General Container Styles */
+.container {
+    max-width: 800px; /* Kengroq container */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styles */
+h2 {
+    font-size: 35px; /* Kattaroq sarlavha */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Elementlar o'rtasidagi katta masofa */
+}
+
+form p {
+    margin-bottom: 20px;
+    font-size: 18px; /* Kattaroq yozuv */
+    color: #555;
+}
+
+form input, form select, form button {
+    padding: 20px; /* Kattaroq padding */
+    font-size: 20px; /* Kattaroq matn o'lchami */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+form input:focus, form select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.2);
+}
+
+form button {
+    font-size: 22px; /* Kattaroq tugma matni */
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+form button:focus {
+    outline: none;
+}
+</style>
+
+{% endblock %}

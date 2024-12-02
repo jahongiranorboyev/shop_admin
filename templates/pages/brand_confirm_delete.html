@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 100px auto; padding: 40px; background-color: #fff; border-radius: 12px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);">
+    <h2 class="text-center mb-4" style="font-family: 'Roboto', sans-serif; font-size: 28px; font-weight: bold; color: #333;">Delete Brand</h2>
+    <p class="text-center" style="font-size: 18px; color: #555;">Are you sure you want to delete the brand <strong style="color: #d9534f;">{{ object.name }}</strong>?</p>
+    <form method="POST" class="text-center" style="margin-top: 30px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" style="background-color: #d9534f; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; transition: background-color 0.3s ease;">
+            Delete
+        </button>
+        <a href="{% url 'brands:brand_list' %}" class="btn btn-secondary" style="background-color: #6c757d; color: white; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; text-decoration: none; margin-left: 15px; transition: background-color 0.3s ease;">
+            Cancel
+        </a>
+    </form>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 100px auto; /* Margins adjusted for more spacing */
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        color: #555;
+        text-align: center;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c9302c;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    form {
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+    }
+</style>
+{% endblock %}
