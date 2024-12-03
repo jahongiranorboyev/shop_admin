@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h3>Bu foydalanuvchini o'chirishni xohlaysizmi?</h3>
+    <p>Foydalanuvchi: {{ user.username }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">O'chirish</button>
+        <a href="{% url 'users:user_list' %}" class="btn btn-secondary">Bekor qilish</a>
+    </form>
+</div>
+{% endblock %}

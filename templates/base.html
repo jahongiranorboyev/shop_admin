@@ -278,7 +278,7 @@
                                 </li>
 
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="index.html">
+                                    <a class="sidebar-link sidebar-title link-nav" href="{% url 'home-page' %}">
                                         <i data-feather="home"></i>
                                         <span>Dashboard</span>
                                     </a>
@@ -295,6 +295,21 @@
                                         </li>
                                         <li>
                                             <a href="{% url 'users:create_user' %}">Add new user</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                        <i data-feather="users"></i>
+                                        <span>Permissions</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li>
+                                            <a href="{% url 'permissions:group_list' %}">All permissions</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'permissions:add_group' %}">Add new permission</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -323,23 +338,6 @@
                                         </li>
                                     </ul>
                                 </li>
-
-                                <li class="sidebar-list">
-                                    <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
-                                        <i data-feather="users"></i>
-                                        <span>Venders</span>
-                                    </a>
-                                    <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'users:vendor_list' %}">Vendor List</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="{% url 'users:vendor_create' %}">Create Vendor</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
                                 <li class="sidebar-list">
                                     <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
                                         <i data-feather="box"></i>
@@ -422,14 +420,6 @@
                                         </li>
                                     </ul>
                                 </li>
-
-                                <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="{% url 'reports:report_list' %}">
-                                        <i data-feather="file-text"></i>
-                                        <span>Reports</span>
-                                    </a>
-                                </li>
-
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav" href="{% url 'authentications:login' %}">
                                         <i data-feather="log-in"></i>

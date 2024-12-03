@@ -56,18 +56,6 @@ class Category(AbstractBaseModel):
         return self.name
 
 
-class Subcategory(Category):
-    """
-    Represents a product subcategory in the system, inheriting from Category.
-    """
-    class Meta:
-        verbose_name_plural = "Subcategories"
-        ordering = ['name']
-
-    def __str__(self):
-        return self.name
-
-
 class Brand(AbstractBaseModel):
     """
     Represents a brand of products in the system.

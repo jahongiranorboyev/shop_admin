@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -80,7 +81,6 @@ INSTALLED_APPS = [
     'apps.coupons',
     'apps.orders',
     'apps.tickets',
-    'apps.reports',
     'apps.brands',
 
     'social_django',
@@ -135,7 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = '/static/'
 
-# Directory where collectstatic will place all static files (used in production)
+# Directory where c  will place all static files (used in production)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Additional directories to look for static files during development

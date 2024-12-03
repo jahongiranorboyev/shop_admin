@@ -1,7 +1,9 @@
 # views.py
-from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+from django.views import View
+from django.views.generic import ListView, UpdateView, DeleteView
 
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -14,6 +16,7 @@ from .forms import ProductForm
 class ProductListView(ListView):
     model = Product
     template_name = 'pages/products.html'
+    paginate_by = 2
 
 
 class ProductCreateView(CreateView):
@@ -41,3 +44,24 @@ class ProductCreateView(CreateView):
         messages.error(self.request, form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'pages/edit-product.html'
+    success_url = reverse_lazy('products:product-list')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Product updated successfully!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, form.errors)
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+class ProductDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        product = get_object_or_404(Product, pk=kwargs['pk'])
+        product.delete()
+        messages.success(self.request, "Product deleted successfully!")
+        return HttpResponseRedirect(reverse_lazy('products:product-list'))

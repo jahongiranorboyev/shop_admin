@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-body">
+    <div class="title-header">
+        <h5>Edit User</h5>
+    </div>
+    <!-- Edit User start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                        <form class="theme-form theme-form-2 mega-form" method="post">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="form-label-title col-lg-2 col-md-3 mb-0">First Name</label>
+                                                    <div class="col-md-9 col-lg-10">
+                                                        <input name="first_name" class="form-control" type="text" value="{{ user.first_name }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="col-lg-2 col-md-3 col-form-label form-label-title">Email Address</label>
+                                                    <div class="col-md-9 col-lg-10">
+                                                        <input name="email" class="form-control" type="email" value="{{ user.email }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="col-lg-2 col-md-3 col-form-label form-label-title">Password</label>
+                                                    <div class="col-md-9 col-lg-10">
+                                                        <input name="password" class="form-control" type="password">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="col-lg-2 col-md-3 col-form-label form-label-title">Confirm Password</label>
+                                                    <div class="col-md-9 col-lg-10">
+                                                        <input name="confirm_password" class="form-control" type="password">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="col-lg-2 col-md-3 col-form-label form-label-title">Groups</label>
+                                                    <div class="col-md-9 col-lg-10">
+                                                        {{ form.groups }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <button type="submit" class="form-control btn btn-primary">Save Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit User End -->
+</div>
+
+{% endblock %}

@@ -55,7 +55,7 @@
                                                 <select class="js-example-basic-single w-100" name="category">
                                                     <option disabled {% if not product.category %}selected{% endif %}>Select Category</option>
                                                     {% for category in categories %}
-                                                        <option value="{{ category.id }}" {% if product.category == category %}selected{% endif %}>{{ category.name }}</option>
+                                                        <option name="category" value="{{ category.id }}" {% if product.category == category %}selected{% endif %}>{{ category.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -67,7 +67,7 @@
                                                 <select class="js-example-basic-single w-100" name="subcategory">
                                                     <option disabled {% if not product.subcategory %}selected{% endif %}>Select Subcategory</option>
                                                     {% for subcategory in subcategories %}
-                                                        <option value="{{ subcategory.id }}" {% if product.subcategory == subcategory %}selected{% endif %}>{{ subcategory.name }}</option>
+                                                        <option name="subcategory" value="{{ subcategory.id }}" {% if product.subcategory == subcategory %}selected{% endif %}>{{ subcategory.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -84,6 +84,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
 
 
 

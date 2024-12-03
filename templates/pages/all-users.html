@@ -21,62 +21,54 @@
                                 <table class="user-table table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                <span class="form-check user-checkbox">
-                                                    <input class="checkbox_animated" type="checkbox" value="" id="checkall">
-                                                </span>User</th>
-                                            <th>Name</th>
+                                            <th>#</th>
+                                            <th>User</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <th>Country</th>
+                                            <th>Role</th>
                                             <th>Last Login</th>
                                             <th>Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     {% for user in users %}
-                                    	<tr>
-                                            <td>
-                                                <div class="form-check user-checkbox">
-                                                    <input class="checkbox_animated check-it" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                                <span>
-                                                    <img src="{% static 'assets/images/users/1.jpg' %}" alt="users">
-                                                </span>
-                                            </td>
-
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
                                             <td>
                                                 <a href="javascript:void(0)">
-                                                    <span class="d-block ">{{ user.username }}</span>
+                                                    <span class="d-block">{{ user.username }}</span>
                                                 </a>
                                             </td>
-
-                                            <td>{{ user.phone_number }}</td>
-
-                                            <td>{{ user.email }}</td>
-
-                                            <td class="font-primary">{{ user.region }}</td>
-
-                                            <td>{{ user.created_at }}</td>
-
+                                            <td>{{ user.phone_number|default:"None" }}</td>
+                                            <td>{{ user.email|default:"None" }}</td>
+                                            <td class="font-primary">
+                                                {% if user.groups.all %}
+                                                    <ul>
+                                                        {% for group in user.groups.all %}
+                                                            <li>{{ group.name }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% else %}
+                                                    <span class="text-muted">No role assigned</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ user.last_login|date:"M. d, Y, h:i a" }}</td>
                                             <td>
-                                                <ul>
-                                                    <li>
-                                                        <a href="order-detail.html">
-                                                            <span class="lnr lnr-eye"></span>
+                                                <ul class="list-inline">
+                                                    <!-- Edit icon -->
+                                                    <li class="list-inline-item">
+                                                        <a href="{% url 'users:user_edit' user.id %}" class="text-primary" title="Edit">
+                                                            <i data-feather="edit"></i>
                                                         </a>
                                                     </li>
-
-                                                    <li>
-                                                        <a href="javascript:void(0)">
-                                                            <span class="lnr lnr-pencil"></span>
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a href="javascript:void(0)">
-                                                            <span class="lnr lnr-trash"></span>
-                                                        </a>
+                                                    <!-- Delete icon -->
+                                                    <li class="list-inline-item">
+                                                        <form action="{% url 'users:user_delete' user.id %}" method="post" style="display:inline;">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-link text-danger p-0" title="Delete">
+                                                                <i data-feather="trash-2"></i>
+                                                            </button>
+                                                        </form>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -138,15 +130,15 @@
     <!-- All User Table Ends-->
 
     <div class="container-fluid">
-                    <!-- footer start-->
-                    <footer class="footer">
-                        <div class="row">
-                            <div class="col-md-12 footer-copyright text-center">
-                                <p class="mb-0">Copyright 2021 © Voxo theme by pixelstrap</p>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- footer end-->
+        <!-- footer start-->
+        <footer class="footer">
+            <div class="row">
+                <div class="col-md-12 footer-copyright text-center">
+                    <p class="mb-0">Copyright 2021 © Voxo theme by pixelstrap</p>
                 </div>
+            </div>
+        </footer>
+        <!-- footer end-->
+    </div>
 </div>
 {% endblock %}

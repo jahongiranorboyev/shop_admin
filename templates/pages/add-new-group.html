@@ -1,0 +1,87 @@
+﻿    {% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-body">
+                <div class="title-header">
+                    <h5>Add New Group </h5>
+                </div>
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button">Group</button>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                                    <form class="theme-form theme-form-2 mega-form" method="post">
+                                                        {% csrf_token %}
+                                                        <div class="card-header-1">
+                                                            <h5>Group Information</h5>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="mb-4 row align-items-center">
+                                                                <label class="form-label-title col-lg-2 col-md-3 mb-0">Name</label>
+                                                                <div class="col-md-9 col-lg-10">
+                                                                    <input name="name" class="form-control" type="text">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            {% for content_type in content_types %}
+                                                            	<div class="card-header-1">
+                                                                    <h5>{{ content_type.model }}</h5>
+                                                                </div>
+                                                                {% for permission in content_type.permission_set.all %}
+                                                                    <div class="mb-4 row align-items-center">
+                                                                        <label class="col-md-2 mb-0">{{ permission.name }}</label>
+                                                                        <div class="col-md-9">
+                                                                            <div class="radio-section">
+                                                                                <label>
+                                                                                    <input type="checkbox" name="permissions" value="{{ permission.pk }}" checked>
+                                                                                    <i></i>
+                                                                                    <span>Allow</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}    
+                                                            {% endfor %}
+                                                            
+                                                        </div>
+                                                        <br>
+                                                        <br>
+                                                        <button type="submit" class="form-control btn btn-primary">Add</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                <div class="container-fluid">
+                    <footer class="footer">
+                        <div class="row">
+                            <div class="col-md-12 footer-copyright text-center">
+                                <p class="mb-0">Copyright 2021 © Voxo theme by pixelstrap</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                <!-- footer end -->
+            </div>
+{% endblock %}

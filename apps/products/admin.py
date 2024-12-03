@@ -7,10 +7,10 @@ from django.contrib import admin
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'price', 'category', 'subcategory', 'brand', 'slug', 'created_at', 'updated_at'
+        'name', 'price', 'category','brand', 'slug', 'created_at', 'updated_at'
     )
     search_fields = ('name',)
-    list_filter = ('category', 'subcategory', 'brand')
+    list_filter = ('category', 'brand')
     prepopulated_fields = {'slug': ('name',)}  # Automatically generate slug from name
 
     def save_model(self, request, obj, form, change):

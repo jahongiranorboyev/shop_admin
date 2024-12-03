@@ -30,9 +30,12 @@ urlpatterns = [
     path('accounts/login/', CustomLoginView.as_view(), name='login'),
 
 
+
     #========== USERS URLS ==========
     path('users/',include('apps.users.urls',namespace='users')),
 
+    # ========== PERMISSIONS URLS ==========
+    path('permissions/', include('apps.permissions.urls', namespace='permissions')),
     #========== ORDERS URLS ==========
     path('orders/',include('apps.orders.urls',namespace='orders')),
 
@@ -44,9 +47,6 @@ urlpatterns = [
 
     #   ========== TICKETS URLS ==========
     path('tickets/', include('apps.tickets.urls', namespace='tickets')),
-
-    #   ========== REPORTS URLS ==========
-    path('reports/', include('apps.reports.urls', namespace='reports')),
 
     #========== CATEGORIES URLS ==========
     path('categories/',include('apps.categories.urls',namespace='categories')),
