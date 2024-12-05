@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -6,7 +7,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from apps.users.forms import AddUserForm, UserForm
 
 
-class UserListView(ListView):
+class UserListView(PermissionRequiredMixin, ListView):
+    permission_required = 'users.view_user'
     model = get_user_model()
     ordering = ['username']
     paginate_by = 10
@@ -18,16 +20,17 @@ class UserListView(ListView):
         return queryset
 
 
-
-class CreateUserView(CreateView):
+class CreateUserView(PermissionRequiredMixin, CreateView):
+    permission_required = 'users.add_user'
     model = get_user_model()
     form_class = AddUserForm
     template_name = 'pages/add-new-user.html'
     success_url = reverse_lazy('users:user_list')
 
 
-class UserEditView(UpdateView):
-    model = get_user_model()  # Foydalanuvchi modelini olish
+class UserEditView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'users.change_user'
+    model = get_user_model()
     form_class = UserForm
     template_name = 'pages/user_edit.html'
     context_object_name = 'user'
@@ -35,24 +38,22 @@ class UserEditView(UpdateView):
     def form_valid(self, form):
         user = form.save(commit=False)
 
-        # Agar parol kiritilgan bo'lsa, uni yangilash
         password = form.cleaned_data.get('password')
         if password:
             user.set_password(password)
 
         user.save()
 
-        # Guruhlarni yangilash
         groups = form.cleaned_data.get('groups')
-        user.groups.set(groups)  # Guruhlarni yangilash
-        return redirect('users:user_list')  # Tahrirlangan foydalanuvchi ro'yxatiga qaytish
+        user.groups.set(groups)
+        return redirect('users:user_list')
 
     def get_success_url(self):
         return reverse_lazy('users:user_list')
 
 
-
-class UserDeleteView(DeleteView):
+class UserDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'users.delete_user'
     model = get_user_model()
     template_name = 'pages/user_confirm_delete.html'
     context_object_name = 'user'
@@ -64,6 +65,7 @@ class UserDeleteView(DeleteView):
         return reverse_lazy('users:user_list')
 
 
-class UpdateUserView(UpdateView):
+class UpdateUserView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'users.change_user'
     model = get_user_model()
     template_name = 'pages/profile-setting.html'

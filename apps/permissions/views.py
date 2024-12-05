@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 
 from django.contrib.auth.models import Group, ContentType
@@ -7,14 +8,16 @@ from apps.permissions.forms import AddGroupForm
 
 
 
-class GroupListView(ListView):
+class GroupListView(PermissionRequiredMixin,ListView):
+    permission_required = 'permissions.view_group'
     model = Group
     template_name = 'pages/all_groups.html'
     context_object_name = 'permissions'
 
 
 
-class CreateGroupView(CreateView):
+class CreateGroupView(PermissionRequiredMixin,CreateView):
+    permission_required = 'permissions.add_group'
     model = Group
     form_class = AddGroupForm
     template_name = 'pages/add-new-group.html'

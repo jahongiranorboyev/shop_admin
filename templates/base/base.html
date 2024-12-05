@@ -210,18 +210,6 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'orders:order_list' %}">
-                                        <i data-feather="archive"></i>
-                                        <span>Orders</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'tickets:ticket_list' %}">
-                                        <i data-feather="phone"></i>
-                                        <span>Tickets</span>
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="{% url 'users:profile_setting' %}">
                                         <i data-feather="settings"></i>
                                         <span>Settings</span>
@@ -290,12 +278,16 @@
                                         <span>Users</span>
                                     </a>
                                     <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'users:user_list' %}">All users</a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'users:create_user' %}">Add new user</a>
-                                        </li>
+                                        {% if perms.users.view_customuser %}
+                                        	<li>
+                                                <a href="{% url 'users:user_list' %}">All users</a>
+                                            </li>
+                                        {% endif %} 
+                                        {% if perms.users.add_customuser %}
+                                        	<li>
+                                                <a href="{% url 'users:create_user' %}">Add new user</a>
+                                            </li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 
@@ -322,34 +314,21 @@
                                 </li>
 
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                        <i data-feather="archive"></i>
-                                        <span>Orders</span>
-                                    </a>
-                                    <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'orders:order_list' %}">Order List</a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'orders:order_detail' %}">Order Detail</a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'orders:order_tracking' %}">Order Tracking</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sidebar-list">
                                     <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
                                         <i data-feather="box"></i>
                                         <span>Product</span>
                                     </a>
                                     <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'products:product-list' %}">Products</a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'products:product-create' %}">Add New Products</a>
-                                        </li>
+                                        {% if perms.products.view_product %}
+                                        	<li>
+                                                <a href="{% url 'products:product-list' %}">Products</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.products.add_product %}
+                                        	<li>
+                                                <a href="{% url 'products:product-create' %}">Add New Products</a>
+                                            </li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 
@@ -359,13 +338,16 @@
                                         <span>Categories</span>
                                     </a>
                                     <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'categories:category_list' %}">Categories</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="{% url 'categories:category_create' %}">Add News Categories</a>
-                                        </li>
+                                        {% if perms.categories.view_category %}
+                                        	<li>
+                                                <a href="{% url 'categories:category_list' %}">Categories</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.categories.add_category %}
+                                        	<li>
+                                                <a href="{% url 'categories:category_create' %}">Add News Categories</a>
+                                            </li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 
@@ -375,13 +357,16 @@
                                         <span>Brands</span>
                                     </a>
                                     <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'brands:brand_list' %}">Brands</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="{% url 'brands:brand_create' %}">Add News Brands</a>
-                                        </li>
+                                        {% if perms.brands.view_brand %}
+                                        	<li>
+                                                <a href="{% url 'brands:brand_list' %}">Brands</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.brands.add_brand %}
+                                        	<li>
+                                                <a href="{% url 'brands:brand_create' %}">Add News Brands</a>
+                                            </li>
+                                        {% endif %}
                                     </ul>
                                 </li>
 
@@ -392,21 +377,17 @@
                                         <span>Coupons</span>
                                     </a>
                                     <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="{% url 'coupons:coupon_list' %}">Coupon List</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="{% url 'coupons:create_coupon' %}">Create Coupon</a>
-                                        </li>
+                                        {% if perms.coupons.view_coupon %}
+                                        	<li>
+                                                <a href="{% url 'coupons:coupon_list' %}">Coupon List</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.coupons.add_coupon %}
+                                        	<li>
+                                                <a href="{% url 'coupons:create_coupon' %}">Create Coupon</a>
+                                            </li>
+                                        {% endif %}
                                     </ul>
-                                </li>
-
-                                <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav" href="{% url 'tickets:ticket_list' %}">
-                                        <i data-feather="phone"></i>
-                                        <span>Support Ticket</span>
-                                    </a>
                                 </li>
 
                                 <li class="sidebar-list">
@@ -426,14 +407,6 @@
                                         <span>Log In</span>
                                     </a>
                                 </li>
-
-{#                                <li class="sidebar-list">#}
-{#                                    <a class="sidebar-link sidebar-title link-nav" href="{% url 'forgot_password' %}">#}
-{#                                        <i data-feather="key"></i>#}
-{#                                        <span>Forgot Password</span>#}
-{#                                    </a>#}
-{#                                </li>#}
-
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav" href="{% url 'authentications:register' %}">
                                         <i data-feather="plus-circle"></i>

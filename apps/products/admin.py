@@ -1,7 +1,6 @@
 from django.utils.text import slugify
 
 from apps.products.models import Product
-from apps.categories.models import Brand
 from django.contrib import admin
 
 @admin.register(Product)

@@ -1,4 +1,5 @@
 # views.py
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic import ListView, UpdateView, DeleteView
@@ -13,13 +14,15 @@ from apps.brands.models import Brand
 from .forms import ProductForm
 
 
-class ProductListView(ListView):
+class ProductListView(PermissionRequiredMixin, ListView):
+    permission_required = 'products.view_product'
     model = Product
     template_name = 'pages/products.html'
     paginate_by = 2
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'products.add_product'
     model = Product
     form_class = ProductForm
     template_name = 'pages/add-new-product.html'
@@ -28,8 +31,8 @@ class ProductCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['categories'] = Category.objects.filter(category__isnull=True)
-        context['subcategories'] = Category.objects.filter(category__isnull=False)
+        context['categories'] = Category.objects.filter(category__isnull=False)
+        context['subcategories'] = Category.objects.filter(category__isnull=True)
         context['brands'] = Brand.objects.all()
         context['product'] = self.object or None
         return context
@@ -44,7 +47,9 @@ class ProductCreateView(CreateView):
         messages.error(self.request, form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'products.change_product'
     model = Product
     form_class = ProductForm
     template_name = 'pages/edit-product.html'
@@ -59,7 +64,9 @@ class ProductUpdateView(UpdateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class ProductDeleteView(View):
+class ProductDeleteView(PermissionRequiredMixin, View):
+    permission_required = 'products.delete_product'
+
     def get(self, request, *args, **kwargs):
         product = get_object_or_404(Product, pk=kwargs['pk'])
         product.delete()

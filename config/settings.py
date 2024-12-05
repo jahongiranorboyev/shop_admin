@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 
@@ -79,11 +80,10 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.categories',
     'apps.coupons',
-    'apps.orders',
-    'apps.tickets',
     'apps.brands',
 
     'social_django',
+    'debug_toolbar',
 
 
 ]
@@ -119,7 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -158,6 +160,16 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+
+CASHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": [
+            "redis://localhost/0",
+        ],
+    }
+}
+
 # Google sozlamalari
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
@@ -173,5 +185,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jahongiranorboyev8@gmail.com'
 EMAIL_HOST_PASSWORD = 'cnskelhvdtpntphd'
-
 

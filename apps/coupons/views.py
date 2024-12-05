@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -8,32 +9,34 @@ from .models import Coupon
 from .forms import CouponForm
 
 
-class CouponCreateView(CreateView):
+class CouponListView(PermissionRequiredMixin, ListView):
+    permission_required = ('coupons.view_coupon',)
+    model = Coupon
+    paginate_by = 5
+    template_name = 'pages/coupon-list.html'
+    context_object_name = 'coupon_list'
+
+
+class CouponCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = ('coupons.add_coupon',)
     model = Coupon
     form_class = CouponForm
     template_name = 'pages/create-coupon.html'
     success_url = reverse_lazy('coupons:coupon_list')
 
 
-class CouponUpdateView(UpdateView):
+class CouponUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = ('coupons.change_coupon',)
     model = Coupon
     form_class = CouponForm
     template_name = 'pages/edit-coupon.html'
     success_url = reverse_lazy('coupons:coupon_list')
 
 
-class CouponDeleteView(View):
+class CouponDeleteView(PermissionRequiredMixin, View):
+    permission_required = ('coupons.delete_coupon',)
+
     def get(self, request, pk):
         coupon = Coupon.objects.get(pk=pk)
-        coupon.delete()  # Delete the coupon
+        coupon.delete()
         return redirect('coupons:coupon_list')
-
-
-
-class CouponListView(ListView):
-    model = Coupon
-    paginate_by = 5  # Define the number of coupons per page
-    template_name = 'pages/coupon-list.html'
-
-    # Optionally, you can override the context_object_name if you prefer a different variable name in the template
-    context_object_name = 'coupon_list'

@@ -21,13 +21,14 @@ class CustomLoginView(LoginView):
             return redirect('home-page')
         return super().form_invalid(form)
 
+
     def form_invalid(self, form):
         messages.error(self.request, "Invalid username or password")
         return super().form_invalid(form)
 
 
 class CustomLogoutView(LogoutView):
-    next_page = 'authentications:login'  # Redirect after logout
+    next_page = 'authentications:login'
 
 
 class RegisterView(FormView):

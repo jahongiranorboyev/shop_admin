@@ -25,35 +25,33 @@ from apps.general.views import IndexView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='home-page'),
-    path('auth/',include('apps.authentications.urls', namespace='authentications')),
+    path('auth/', include('apps.authentications.urls', namespace='authentications')),
     path('social/', include('social_django.urls')),
     path('accounts/login/', CustomLoginView.as_view(), name='login'),
 
-
-
-    #========== USERS URLS ==========
-    path('users/',include('apps.users.urls',namespace='users')),
+    # ========== USERS URLS ==========
+    path('users/', include('apps.users.urls', namespace='users')),
 
     # ========== PERMISSIONS URLS ==========
     path('permissions/', include('apps.permissions.urls', namespace='permissions')),
-    #========== ORDERS URLS ==========
-    path('orders/',include('apps.orders.urls',namespace='orders')),
 
     #   ========== PRODUCT URLS ==========
-    path('products/',include('apps.products.urls',namespace='products')),
+    path('products/', include('apps.products.urls', namespace='products')),
 
     #   ========== COUPONS URLS ==========
-    path('coupons/',include('apps.coupons.urls',namespace='coupons')),
+    path('coupons/', include('apps.coupons.urls', namespace='coupons')),
 
-    #   ========== TICKETS URLS ==========
-    path('tickets/', include('apps.tickets.urls', namespace='tickets')),
+    # ========== CATEGORIES URLS ==========
+    path('categories/', include('apps.categories.urls', namespace='categories')),
 
-    #========== CATEGORIES URLS ==========
-    path('categories/',include('apps.categories.urls',namespace='categories')),
-
-    #========== CATEGORIES URLS ==========
-    path('brands/',include('apps.brands.urls',namespace='brands')),
+    # ========== CATEGORIES URLS ==========
+    path('brands/', include('apps.brands.urls', namespace='brands')),
 
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]

@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
@@ -6,13 +7,15 @@ from .models import Category
 from .forms import CategoryForm
 
 
-class CategoryListView(ListView):
+class CategoryListView(PermissionRequiredMixin, ListView):
+    permission_required = 'categories.view_category'
     model = Category
     template_name = 'pages/category_list.html'
     context_object_name = 'categories'
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'categories.add_category'
     model = Category
     form_class = CategoryForm
     template_name = 'pages/category_form.html'
@@ -20,7 +23,8 @@ class CategoryCreateView(CreateView):
 
 
 # Category Update View
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(PermissionRequiredMixin,UpdateView):
+    permission_required = 'categories.change_category'
     model = Category
     form_class = CategoryForm
     template_name = 'pages/category_edit.html'
@@ -32,7 +36,8 @@ class CategoryUpdateView(UpdateView):
 
 
 # Category Delete View
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(PermissionRequiredMixin,DeleteView):
+    permission_required = 'categories.delete_category'
     model = Category
     template_name = 'pages/category_delete_confirm.html'
     success_url = reverse_lazy('categories:category_list')
