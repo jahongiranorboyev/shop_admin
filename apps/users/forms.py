@@ -28,7 +28,6 @@ class AddUserForm(forms.ModelForm):
         return confirm_password
 
     def save(self, commit=True):
-        # Hash password before saving user
         self.cleaned_data.pop('confirm_password')
         self.cleaned_data['password'] = make_password(self.cleaned_data['password'])
 
@@ -37,16 +36,30 @@ class AddUserForm(forms.ModelForm):
         if commit:
             user.save()
 
-        # Saving the group relations (ManyToManyField)
         self.save_m2m()
 
         return user
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
-    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
 
     class Meta:
-        model = get_user_model()  # Foydalanuvchi modelini olish
-        fields = ['username', 'email', 'first_name', 'last_name']
+        model = get_user_model()
+        fields = ['username', 'email', 'groups', 'password', 'confirm_password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise forms.ValidationError('Passwords did not match !')
+
+        return cleaned_data

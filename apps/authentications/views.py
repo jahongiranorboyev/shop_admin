@@ -1,11 +1,11 @@
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib import messages
 from .forms import CustomUserCreationForm
+from django.urls import reverse_lazy
 
 class LoginPageView(TemplateView):
     template_name = 'auth/login.html'
@@ -45,3 +45,6 @@ class RegisterView(FormView):
     def form_invalid(self, form):
         messages.error(self.request, form.errors)
         return self.render_to_response(self.get_context_data(form=form))
+
+
+

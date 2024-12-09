@@ -82,13 +82,50 @@
 
                                 <!-- Social Login -->
                                 <div class="row gx-md-3 gy-3">
-                                    <a href="{% url 'social:begin' 'google-oauth2' %}">
-                                        <div class="social-media google-media">
-                                            <img src="{% static 'assets/images/google.png' %}" alt="Google">
-                                            <h6>Google</h6>
-                                        </div>
-                                    </a>
+                                    <!-- First Row: Facebook and Google -->
+                                    <div class="col-12 col-md-6 d-flex justify-content-center">
+                                        <a href="javascript:void(0)">
+                                            <div class="social-media fb-media text-center">
+                                                <img src="{% static 'assets/images/facebook.png' %}" class="img-fluid blur-up lazyload" alt="">
+                                                <h6>Facebook</h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                
+                                    <div class="col-12 col-md-6 d-flex justify-content-center">
+                                        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                            <div class="social-media google-media text-center">
+                                                <img src="{% static 'assets/images/google.png' %}" alt="Google">
+                                                <h6>Google</h6>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
+                                <br>
+                                
+                                <div class="row gx-md-3 gy-3">
+                                    <!-- Second Row: Telegram and Microsoft -->
+                                    <div class="col-12 col-md-6 d-flex justify-content-center">
+                                        <a href="javascript:void(0)">
+                                            <div class="social-media telegram-media text-center" style="background-color: white; padding: 20px; border-radius: 10px;">
+                                                <img src="{% static 'assets/images/telegram.png' %}" alt="Telegram" class="img-fluid" style="max-width: 50px;">
+                                                <h6 style="color: black;">Telegram</h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                
+                                    <div class="col-12 col-md-6 d-flex justify-content-center">
+                                        <a href="javascript:void(0)">
+                                            <div class="social-media microsoft-media text-center" style="background-color: white; padding: 20px; border-radius: 10px;">
+                                                <img src="{% static 'assets/images/Microsoft.png' %}" alt="Microsoft" class="img-fluid" style="max-width: 50px;">
+                                                <h6 style="color: black;">Microsoft</h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+
 
                                 <!-- Already have an account -->
                                 <p>

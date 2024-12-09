@@ -25,8 +25,13 @@ from apps.general.views import IndexView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='home-page'),
-    path('auth/', include('apps.authentications.urls', namespace='authentications')),
-    path('social/', include('social_django.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
+
+
+
+    path('auth/login', include('apps.authentications.urls', namespace='authentications')),
+    path('social/', include('social_django.urls', namespace='social')),
+    path('login/', CustomLoginView.as_view(), name='login'),
     path('accounts/login/', CustomLoginView.as_view(), name='login'),
 
     # ========== USERS URLS ==========
