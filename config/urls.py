@@ -27,8 +27,6 @@ urlpatterns = [
     path('', IndexView.as_view(), name='home-page'),
     path('auth/', include('django.contrib.auth.urls')),
 
-
-
     path('auth/login', include('apps.authentications.urls', namespace='authentications')),
     path('social/', include('social_django.urls', namespace='social')),
     path('login/', CustomLoginView.as_view(), name='login'),
